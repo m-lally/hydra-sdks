@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head><title>Hydra Payments Example</title></head>
+<body>
+  <h1>Hydra Checkout</h1>
+  <button id="payBtn">Pay £20.00</button>
+  <script src="https://unpkg.com/@hydrapp/sdk@latest"></script>
+  <script>
+    const hydra = new Hydra('pk_live_abc123');
+
+    document.getElementById('payBtn').onclick = async () => {
+      const payment = await hydra.payments.create({
+        amount: 2000,
+        currency: 'gbp',
+        merchantId: 'mrp_abc123',
+        paymentMethods: ['card'],
+        capture: true,
+      });
+      alert(`Payment created: ${payment.id} (${payment.status})`);
+    };
+  </script>
+</body>
+</html>

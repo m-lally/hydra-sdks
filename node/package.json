@@ -1,0 +1,10 @@
+{
+  "name": "@hydrapp/sdk-node",
+  "version": "0.1.0",
+  "description": "Hydra payments SDK for Node.js",
+  "main": "src/hydra.js",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

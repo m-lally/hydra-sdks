@@ -1,0 +1,11 @@
+{
+  "name": "@hydrapp/sdk",
+  "version": "0.1.0",
+  "description": "Hydra payments SDK for the browser",
+  "main": "src/hydra.js",
+  "type": "module",
+  "license": "MIT",
+  "dependencies": {
+    "uuid": "^9.0.0"
+  }
+}
