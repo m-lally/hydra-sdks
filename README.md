@@ -1,6 +1,6 @@
 # Hydra SDKs
 
-Official client libraries for the [Hydra payments API](https://api.hydrapp.com).
+Official client libraries for the [Hydra payments API](https://hydrapay.io).
 
 ## Quickstart
 
@@ -96,7 +96,7 @@ let payment = hydra.payments().create(CreatePayment {
 
 ## Documentation
 
-Full API reference at [docs.hydrapp.com](https://docs.hydrapp.com).
+Full API reference at [docs.hydrapp.com](https://hydrapay.io/docs).
 
 ## License
 
