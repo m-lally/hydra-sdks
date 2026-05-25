@@ -90,7 +90,7 @@ class Balance(HydraResource):
 
 
 class Hydra:
-    def __init__(self, api_key, base_url='https://api.hydrapp.com', timeout=30):
+    def __init__(self, api_key, base_url='https://api.hydrapay.io', timeout=30):
         self.api_key = api_key
         self.base_url = base_url.rstrip('/')
         self.timeout = timeout

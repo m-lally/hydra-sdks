@@ -5,7 +5,7 @@ Use Hydra directly in the browser via a `<script>` tag.
 ## Usage
 
 ```html
-<script src="https://unpkg.com/@hydrapp/sdk@latest"></script>
+<script src="https://unpkg.com/@hydra-pay/sdk@latest"></script>
 <script>
   const hydra = new Hydra('pk_live_abc123');
 

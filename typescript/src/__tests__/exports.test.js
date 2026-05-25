@@ -10,7 +10,7 @@ before(() => {
   vue = require('../../dist/vue/index.js');
 });
 
-describe('Core root (@hydra-payments/sdk)', () => {
+describe('Core root (@hydra-pay/sdk)', () => {
   it('exports HydraClient', () => {
     assert.equal(typeof core.HydraClient, 'function');
   });
@@ -72,7 +72,7 @@ describe('Core root (@hydra-payments/sdk)', () => {
   });
 });
 
-describe('React subpath (@hydra-payments/sdk/react)', () => {
+describe('React subpath (@hydra-pay/sdk/react)', () => {
   it('exports HydraProvider', () => {
     assert.equal(typeof react.HydraProvider, 'function');
   });
@@ -106,7 +106,7 @@ describe('React subpath (@hydra-payments/sdk/react)', () => {
   });
 });
 
-describe('Vue subpath (@hydra-payments/sdk/vue)', () => {
+describe('Vue subpath (@hydra-pay/sdk/vue)', () => {
   it('exports createHydraPlugin', () => {
     assert.equal(typeof vue.createHydraPlugin, 'function');
   });

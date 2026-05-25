@@ -5,13 +5,13 @@ Client-side SDK for the Hydra payments API. Works in all modern browsers.
 ## Installation
 
 ```bash
-npm install @hydrapp/sdk
+npm install @hydra-pay/sdk
 ```
 
 ## Usage
 
 ```javascript
-import Hydra from '@hydrapp/sdk';
+import Hydra from '@hydra-pay/sdk';
 
 const hydra = new Hydra('pk_live_abc123'); // publishable key for client-side
 
@@ -38,7 +38,7 @@ const payment = await hydra.payments.get('pay_abc123');
 
 | Option | Default | Description |
 |--------|---------|-------------|
-| `baseUrl` | `https://api.hydrapp.com` | API base URL |
+| `baseUrl` | `https://api.hydrapay.io` | API base URL |
 | `timeout` | `30000` | Request timeout (ms) |
 | `headers` | `{}` | Additional headers |
 

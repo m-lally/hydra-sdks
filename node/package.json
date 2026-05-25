@@ -1,5 +1,5 @@
 {
-  "name": "@hydrapp/sdk-node",
+  "name": "@hydra-pay/sdk-node",
   "version": "0.1.0",
   "description": "Hydra payments SDK for Node.js",
   "main": "src/hydra.js",

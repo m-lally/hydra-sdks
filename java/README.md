@@ -23,7 +23,7 @@ Add to your `pom.xml`:
 
 ```java
 HydraClient client = HydraClientBuilder.newBuilder()
-    .baseUrl("https://api.wideeyedigital.co.uk")
+    .baseUrl("https://api.hydrapay.io")
     .apiKey("your-api-key")
     .secretKey("your-secret-key")
     .build();
@@ -49,7 +49,7 @@ System.out.println(fetched.getStatus());
 
 ```java
 HydraClient client = HydraClientBuilder.newBuilder()
-    .baseUrl("https://api.wideeyedigital.co.uk")
+    .baseUrl("https://api.hydrapay.io")
     .apiKey("sk_test_...")
     .secretKey("whsec_...")
     .defaultCurrency("USD")

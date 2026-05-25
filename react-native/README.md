@@ -5,7 +5,7 @@ React Native SDK for the Hydra Payment Service — HMAC-signed client, TypeScrip
 ## Install
 
 ```sh
-npm add @hydra-payments/react-native-sdk
+npm add @hydra-pay/react-native-sdk
 ```
 
 Requires React Native 0.73+ and React 18+.
@@ -15,7 +15,7 @@ Requires React Native 0.73+ and React 18+.
 ### Core Client
 
 ```ts
-import { HydraClient, createHydraClient } from '@hydra-payments/react-native-sdk';
+import { HydraClient, createHydraClient } from '@hydra-pay/react-native-sdk';
 
 const client = createHydraClient({
   apiKey: 'pk_live_abc123',
@@ -38,7 +38,7 @@ const tx = await client.transfer('acc_1', 'acc_2', '100.00', 'GBP', 'payment');
 Wrap your app with `HydraProvider`:
 
 ```tsx
-import { HydraProvider, StatusBadge, AccountCard } from '@hydra-payments/react-native-sdk/components';
+import { HydraProvider, StatusBadge, AccountCard } from '@hydra-pay/react-native-sdk/components';
 
 function App() {
   return (
@@ -52,7 +52,7 @@ function App() {
 ### Hooks
 
 ```tsx
-import { useAccount, useAccountsByOwner, useHealthCheck } from '@hydra-payments/react-native-sdk/components';
+import { useAccount, useAccountsByOwner, useHealthCheck } from '@hydra-pay/react-native-sdk/components';
 
 function AccountScreen({ accountId }: { accountId: string }) {
   const { account, loading, error, refetch } = useAccount(accountId);
@@ -65,7 +65,7 @@ function AccountScreen({ accountId }: { accountId: string }) {
 ### Payment Form
 
 ```tsx
-import { PaymentForm } from '@hydra-payments/react-native-sdk/components';
+import { PaymentForm } from '@hydra-pay/react-native-sdk/components';
 
 function CheckoutScreen() {
   return (

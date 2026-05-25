@@ -25,7 +25,7 @@ dotnet add package HydraPayments.Sdk
 using HydraPayments.Sdk;
 
 var client = new HydraClientBuilder()
-    .BaseUrl("https://api.wideeyedigital.co.uk")
+    .BaseUrl("https://api.hydrapay.io")
     .ApiKey("your-api-key")
     .SecretKey("your-secret-key")
     .Build();
@@ -51,7 +51,7 @@ Console.WriteLine(fetched.Status);
 
 ```csharp
 var client = new HydraClientBuilder()
-    .BaseUrl("https://api.wideeyedigital.co.uk")
+    .BaseUrl("https://api.hydrapay.io")
     .ApiKey("sk_test_...")
     .SecretKey("whsec_...")
     .DefaultCurrency("USD")
@@ -65,7 +65,7 @@ var client = new HydraClientBuilder()
 ```csharp
 var httpClient = new HttpClient();
 var client = new HydraClientBuilder()
-    .BaseUrl("https://api.wideeyedigital.co.uk")
+    .BaseUrl("https://api.hydrapay.io")
     .ApiKey("sk_test_...")
     .SecretKey("whsec_...")
     .HttpClient(httpClient)

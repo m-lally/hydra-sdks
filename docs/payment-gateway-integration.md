@@ -15,8 +15,8 @@ The Hydra Payment Gateway provides:
 
 | Environment | URL |
 |-------------|-----|
-| Production | `https://api.hydra-payments.com` (replace with your domain) |
-| Sandbox | `https://sandbox.hydra-payments.com` (replace with your domain) |
+| Production | `https://api.hydrapay.io` (replace with your domain) |
+| Sandbox | `https://sandbox.hydrapay.io` (replace with your domain) |
 
 ## Request Limits
 
@@ -37,16 +37,16 @@ SDKs handle this automatically. Requests with an invalid or missing signature re
 | Language | Package | Location |
 |----------|---------|----------|
 | Rust | `hydra-sdk` | `sdks/rust/` |
-| TypeScript | `@hydra-payments/sdk` | `sdks/typescript/` |
+| TypeScript | `@hydra-pay/sdk` | `sdks/typescript/` |
 | Python | `hydra-payments` | `sdks/python/` |
-| Go | `github.com/hydra-payments/go-sdk` | `sdks/go/` |
+| Go | `github.com/hydra-pay/go-sdk` | `sdks/go/` |
 | PHP | `hydra-payments/sdk-php` | `sdks/php/` |
 | Java | `com.hydrapayments:sdk-java` | `sdks/java/` |
 | .NET | `HydraPayments.Sdk` | `sdks/dotnet/` |
 | Ruby | `hydra_payments` | `sdks/ruby/` |
 | iOS (Swift) | `HydraPayments` | `sdks/ios/` |
 | Android (Kotlin) | `com.hydrapayments:sdk` | `sdks/android/` |
-| React Native | `@hydra-payments/react-native-sdk` | `sdks/react-native/` |
+| React Native | `@hydra-pay/react-native-sdk` | `sdks/react-native/` |
 | Terraform | `registry.terraform.io/hydra-payments/hydra` | `sdks/terraform/` |
 
 ## API Reference
@@ -56,7 +56,7 @@ SDKs handle this automatically. Requests with an invalid or missing signature re
 **Endpoint:** `GET /health`
 
 ```bash
-curl https://sandbox.hydra-payments.com/health
+curl https://sandbox.hydrapay.io/health
 ```
 
 Response:
@@ -75,7 +75,7 @@ Response:
 Tokenize card data for secure storage. In test mode, any card can be used.
 
 ```bash
-curl -X POST https://sandbox.hydra-payments.com/v1/payments/tokens \
+curl -X POST https://sandbox.hydrapay.io/v1/payments/tokens \
   -H "Content-Type: application/json" \
   -d '{
     "card": {
@@ -119,7 +119,7 @@ Response (201):
 Initiate a payment. Supports idempotency keys for safe retries.
 
 ```bash
-curl -X POST https://sandbox.hydra-payments.com/v1/payments/intents \
+curl -X POST https://sandbox.hydrapay.io/v1/payments/intents \
   -H "Content-Type: application/json" \
   -d '{
     "amount": 5000,
@@ -162,7 +162,7 @@ Rate limit: 100 requests per 60-second window.
 Refund a previous charge. Supports partial refunds.
 
 ```bash
-curl -X POST https://sandbox.hydra-payments.com/v1/refunds \
+curl -X POST https://sandbox.hydrapay.io/v1/refunds \
   -H "Content-Type: application/json" \
   -d '{
     "charge_id": "ch_test123",
@@ -194,7 +194,7 @@ Response (201):
 Get the total commission collected across all payments.
 
 ```bash
-curl https://sandbox.hydra-payments.com/v1/commission
+curl https://sandbox.hydrapay.io/v1/commission
 ```
 
 Response:
@@ -249,7 +249,7 @@ Response:
 Prometheus-format metrics for monitoring.
 
 ```bash
-curl https://sandbox.hydra-payments.com/v1/metrics
+curl https://sandbox.hydrapay.io/v1/metrics
 ```
 
 Response:

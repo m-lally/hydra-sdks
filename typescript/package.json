@@ -1,16 +1,16 @@
 {
-  "name": "@hydra-payments/sdk",
+  "name": "@hydra-pay/sdk",
   "version": "1.0.0",
   "description": "TypeScript SDK for Hydra Payment Service — HMAC-signed client, types, React & Vue integration",
   "license": "MIT",
   "author": "Hydra Payments",
-  "homepage": "https://github.com/hydra-payments/sdk#readme",
+  "homepage": "https://github.com/hydra-pay/sdk#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hydra-payments/sdk.git"
+    "url": "git+https://github.com/hydra-pay/sdk.git"
   },
   "bugs": {
-    "url": "https://github.com/hydra-payments/sdk/issues"
+    "url": "https://github.com/hydra-pay/sdk/issues"
   },
   "keywords": [
     "hydra",

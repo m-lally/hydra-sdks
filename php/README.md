@@ -1,6 +1,6 @@
 # Hydra Payment Service — PHP SDK
 
-A production-grade PHP SDK for the [Hydra Payment Service](https://github.com/hydra-payments) with HMAC-SHA256 request signing and optional Laravel integration.
+A production-grade PHP SDK for the [Hydra Payment Service](https://github.com/hydra-pay) with HMAC-SHA256 request signing and optional Laravel integration.
 
 ## Features
 

@@ -38,7 +38,7 @@ dependencies {
 import com.hydrapayments.sdk.*
 
 val client = HydraClientBuilder()
-    .baseUrl("https://api.wideeyedigital.co.uk")
+    .baseUrl("https://api.hydrapay.io")
     .apiKey("your-api-key")
     .secretKey("your-secret-key")
     .build()
@@ -64,7 +64,7 @@ println(fetched.status)
 
 ```kotlin
 val client = HydraClientBuilder()
-    .baseUrl("https://api.wideeyedigital.co.uk")
+    .baseUrl("https://api.hydrapay.io")
     .apiKey("sk_test_...")
     .secretKey("whsec_...")
     .defaultCurrency("USD")

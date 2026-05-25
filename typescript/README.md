@@ -5,7 +5,7 @@ TypeScript SDK for the Hydra Payment Service.
 ## Install
 
 ```sh
-npm add @hydra-payments/sdk
+npm add @hydra-pay/sdk
 ```
 
 ## Usage
@@ -13,12 +13,12 @@ npm add @hydra-payments/sdk
 ### Core client (no React dependency)
 
 ```ts
-import { HydraClient } from '@hydra-payments/sdk';
+import { HydraClient } from '@hydra-pay/sdk';
 
 const client = new HydraClient({
   apiKey: 'your-api-key',
   secretKey: 'your-secret-key',
-  baseUrl: 'https://api.hydra-payments.com',
+  baseUrl: 'https://api.hydrapay.io',
 });
 
 const { data: account } = await client.getAccount('acc_123');
@@ -28,14 +28,14 @@ console.log(account.balance);
 ### React integration
 
 ```tsx
-import { HydraProvider, useAccount, AccountCard } from '@hydra-payments/sdk/react';
+import { HydraProvider, useAccount, AccountCard } from '@hydra-pay/sdk/react';
 
 function App() {
   return (
     <HydraProvider
       apiKey="your-api-key"
       secretKey="your-secret-key"
-      baseUrl="https://api.hydra-payments.com"
+      baseUrl="https://api.hydrapay.io"
     >
       <Dashboard />
     </HydraProvider>
@@ -51,7 +51,7 @@ function Dashboard() {
 
 ## API
 
-### Core (`@hydra-payments/sdk`)
+### Core (`@hydra-pay/sdk`)
 
 | Method | Description |
 |--------|-------------|
@@ -76,7 +76,7 @@ function Dashboard() {
 | `client.getCommission()` | Get commission totals |
 | `client.verifyWebhookSignature()` | Verify incoming webhook HMAC |
 
-### React (`@hydra-payments/sdk/react`)
+### React (`@hydra-pay/sdk/react`)
 
 | Hook/Component | Description |
 |----------------|-------------|

@@ -185,7 +185,7 @@ Read **`INTEGRATION_GUIDE.md`** for:
 
 Install SDK:
 ```bash
-npm add @hydra-payments/react-native-sdk  # React Native
+npm add @hydra-pay/react-native-sdk  # React Native
 pip install hydra-payments                 # Python
 ```
 
@@ -194,14 +194,14 @@ pip install hydra-payments                 # Python
 Choose an SDK for your backend language:
 
 ```bash
-go get github.com/hydra-payments/go-sdk              # Go
+go get github.com/hydra-pay/go-sdk              # Go
 composer require hydra-payments/sdk-php               # PHP/Laravel
 pip install hydra-payments                            # Python
 cargo add hydra-payments                              # Rust
-npm add @hydra-payments/sdk                           # Node.js/TypeScript
+npm add @hydra-pay/sdk                           # Node.js/TypeScript
 dotnet add package HydraPayments.Sdk                  # .NET
 gem install hydra_payments                            # Ruby
-swift package add-dependency https://github.com/hydra-payments/hydra.git  # iOS
+swift package add-dependency https://github.com/hydra-pay/hydra.git  # iOS
 implementation("com.hydrapayments:sdk:0.1.0")                            # Android
 terraform init                                                           # Terraform
 ```

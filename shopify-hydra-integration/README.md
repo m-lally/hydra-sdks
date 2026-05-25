@@ -27,7 +27,7 @@ This integration provides a seamless way for Shopify store owners to use Hydra's
 Before you begin, ensure you have:
 
 1. A [Shopify Partner](https://partners.shopify.com/) account
-2. A [Hydra Payments](https://hydra.com) account with API keys
+2. A [Hydra Payments](https://hydrapay.io) account with API keys
 3. Node.js 14+ installed
 4. ngrok or similar tool for local development (to expose your local server to the internet)
 5. Basic knowledge of Shopify app development
@@ -47,7 +47,7 @@ Before you begin, ensure you have:
 
 ### 2. Configure Hydra Credentials
 
-1. Log in to your [Hydra Dashboard](https://dashboard.hydra.com)
+1. Log in to your [Hydra Dashboard](https://dashboard.hydrapay.io)
 2. Navigate to Developers → API Keys
 3. Create or note down your:
    - Public Key (starts with `pk_`)
@@ -361,8 +361,8 @@ Before moving to production:
 For support with this integration:
 
 1. Check the [GitHub Issues](https://github.com/your-repo/shopify-hydra-integration/issues) for known problems
-2. Visit the [Hydra Documentation](https://docs.hydra.com/integrations/shopify)
-3. Contact Hydra Support: support@hydra.com
+2. Visit the [Hydra Documentation](https://docs.hydrapay.io/integrations/shopify)
+3. Contact Hydra Support: support@hydrapay.io
 4. For Shopify-specific issues, consult the [Shopify Partner Documentation](https://partner.shopify.com/)
 
 ## License

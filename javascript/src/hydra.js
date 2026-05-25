@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 class Hydra {
   constructor(apiKey, options = {}) {
     this.apiKey = apiKey;
-    this.baseUrl = options.baseUrl || 'https://api.hydrapp.com';
+    this.baseUrl = options.baseUrl || 'https://api.hydrapay.io';
     this.timeout = options.timeout || 30000;
     this.headers = options.headers || {};
   }

@@ -53,7 +53,7 @@ Choose the SDK for your platform:
 
 #### Node.js/TypeScript
 ```bash
-npm add @hydra-payments/sdk
+npm add @hydra-pay/sdk
 ```
 
 #### Python
@@ -69,7 +69,7 @@ hydra_payments = "0.1.0"
 
 #### Go
 ```bash
-go get github.com/hydra-payments/go-sdk
+go get github.com/hydra-pay/go-sdk
 ```
 
 #### PHP (Laravel)
@@ -100,7 +100,7 @@ gem install hydra_payments
 ```swift
 // Add to Package.swift
 dependencies: [
-    .package(url: "https://github.com/hydra-payments/hydra.git", branch: "main")
+    .package(url: "https://github.com/hydra-pay/hydra.git", branch: "main")
 ]
 ```
 
@@ -114,7 +114,7 @@ dependencies {
 
 #### React Native
 ```bash
-npm add @hydra-payments/react-native-sdk
+npm add @hydra-pay/react-native-sdk
 ```
 
 #### Terraform
@@ -429,7 +429,7 @@ Response:
 ### React Native
 
 ```typescript
-import { createHydraClient } from '@hydra-payments/react-native-sdk';
+import { createHydraClient } from '@hydra-pay/react-native-sdk';
 
 const hydra = createHydraClient({
   apiKey: process.env.HYDRA_API_KEY!,
@@ -471,7 +471,7 @@ async function processCheckout(
 }
 
 // 3. React Native UI with hooks
-import { HydraProvider, useAccount, AccountCard } from '@hydra-payments/react-native-sdk/components';
+import { HydraProvider, useAccount, AccountCard } from '@hydra-pay/react-native-sdk/components';
 
 function App() {
   return (
@@ -498,7 +498,7 @@ function CheckoutScreen() {
 ### TypeScript/JavaScript
 
 ```typescript
-import { createHydraClient } from '@hydra-payments/sdk';
+import { createHydraClient } from '@hydra-pay/sdk';
 
 const hydra = createHydraClient({
   apiKey: process.env.VITE_HYDRA_API_KEY!,
@@ -545,7 +545,7 @@ async function processCheckout(
 }
 
 // 3. React integration with HydraProvider
-import { HydraProvider, useAccount, AccountCard } from '@hydra-payments/sdk/react';
+import { HydraProvider, useAccount, AccountCard } from '@hydra-pay/sdk/react';
 
 function App() {
   return (
@@ -692,7 +692,7 @@ package main
 import (
     "fmt"
     "log"
-    "github.com/hydra-payments/go-sdk"
+    "github.com/hydra-pay/go-sdk"
 )
 
 func main() {
@@ -873,7 +873,7 @@ cd gateway && cargo test
 - **Documentation**: See `design.md` for architecture details
 - **SDKs**: Available for Python, Node.js, TypeScript, Rust, Go, PHP/Laravel, React Native, Terraform
 - **Issues**: Report via GitHub issues
-- **Contact**: payments@hydra.local
+- **Contact**: payments@hydrapay.io
 
 ---
 

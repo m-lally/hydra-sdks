@@ -9,7 +9,7 @@ before(() => {
   core = require('../../dist/index.js');
 });
 
-describe('Core root (@hydra-payments/react-native-sdk)', () => {
+describe('Core root (@hydra-pay/react-native-sdk)', () => {
   it('exports HydraClient', () => {
     assert.equal(typeof core.HydraClient, 'function');
   });

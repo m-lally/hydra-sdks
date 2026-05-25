@@ -1,6 +1,6 @@
 # API Reference
 
-Base URL: `https://api.hydrapp.com`
+Base URL: `https://api.hydrapay.io`
 
 Authentication: `Authorization: Bearer <api_key>`
 

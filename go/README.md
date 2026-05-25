@@ -1,6 +1,6 @@
 # Hydra Payment Service — Go SDK
 
-A production-grade Go SDK for the [Hydra Payment Service](https://github.com/hydra-payments) with HMAC-SHA256 request signing.
+A production-grade Go SDK for the [Hydra Payment Service](https://github.com/hydra-pay) with HMAC-SHA256 request signing.
 
 ## Features
 
@@ -15,7 +15,7 @@ A production-grade Go SDK for the [Hydra Payment Service](https://github.com/hyd
 ## Installation
 
 ```bash
-go get github.com/hydra-payments/go-sdk
+go get github.com/hydra-pay/go-sdk
 ```
 
 ## Quick Start
@@ -27,7 +27,7 @@ import (
     "fmt"
     "log"
 
-    "github.com/hydra-payments/go-sdk"
+    "github.com/hydra-pay/go-sdk"
 )
 
 func main() {

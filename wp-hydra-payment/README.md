@@ -49,7 +49,7 @@ A secure and easy-to-integrate WordPress plugin that connects your WooCommerce o
 
 To use this plugin, you need a Hydra Payments account:
 
-1. Sign up at [https://hydra.com](https://hydra.com)
+1. Sign up at [https://hydrapay.io](https://hydrapay.io)
 2. Navigate to the Developer section in your dashboard
 3. Create API keys (Public and Secret)
 4. Set up webhooks if needed for real-time notifications
@@ -259,9 +259,9 @@ To enable debugging:
 ## Support
 
 For support, please visit:
-- Documentation: [https://docs.hydra.com/wordpress](https://docs.hydra.com/wordpress)
-- Support Forum: [https://support.hydra.com](https://support.hydra.com)
-- Email: support@hydra.com
+- Documentation: [https://docs.hydrapay.io/wordpress](https://docs.hydrapay.io/wordpress)
+- Support Forum: [https://support.hydrapay.io](https://support.hydrapay.io)
+- Email: support@hydrapay.io
 
 ## Changelog
 

@@ -27,7 +27,7 @@ gem install hydra_payments
 require 'hydra_payments'
 
 client = HydraPayments::ClientBuilder.new
-  .base_url('https://api.wideeyedigital.co.uk')
+  .base_url('https://api.hydrapay.io')
   .api_key('your-api-key')
   .secret_key('your-secret-key')
   .build
@@ -53,7 +53,7 @@ puts fetched.status
 
 ```ruby
 client = HydraPayments::ClientBuilder.new
-  .base_url('https://api.wideeyedigital.co.uk')
+  .base_url('https://api.hydrapay.io')
   .api_key('sk_test_...')
   .secret_key('whsec_...')
   .default_currency('USD')

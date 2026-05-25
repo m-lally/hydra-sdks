@@ -1,6 +1,6 @@
 # Hydra Payment Service — Terraform Provider
 
-A [Terraform](https://www.terraform.io) provider for the [Hydra Payment Service](https://github.com/hydra-payments) — manage HydraPay resources as Infrastructure as Code.
+A [Terraform](https://www.terraform.io) provider for the [Hydra Payment Service](https://github.com/hydra-pay) — manage HydraPay resources as Infrastructure as Code.
 
 ## Features
 
@@ -31,7 +31,7 @@ terraform {
 }
 
 provider "hydra" {
-  base_url   = "https://api.wideeyedigital.co.uk"
+  base_url   = "https://api.hydrapay.io"
   api_key    = var.hydra_api_key
   secret_key = var.hydra_secret_key
 }
@@ -40,7 +40,7 @@ provider "hydra" {
 ### Building from Source
 
 ```bash
-git clone https://github.com/hydra-payments/hydra.git
+git clone https://github.com/hydra-pay/hydra.git
 cd sdks/terraform
 go build -o terraform-provider-hydra
 ```

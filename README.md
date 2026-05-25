@@ -6,7 +6,7 @@ Official client libraries and platform integrations for the [Hydra payments API]
 
 | Language | Directory | Package | Status |
 |----------|-----------|---------|--------|
-| **[Go](./go/README.md)** | `go/` | `github.com/hydra-payments/go-sdk` | ✅ 60 tests |
+| **[Go](./go/README.md)** | `go/` | `github.com/hydra-pay/go-sdk` | ✅ 60 tests |
 | **[PHP/Laravel](./php/README.md)** | `php/` | `hydra-payments/sdk-php` | ✅ 129 tests |
 | **[Python](./python/README.md)** | `python/` | `hydra-payments` | ✅ |
 | **[Rust](./rust/README.md)** | `rust/` | `hydra-sdk` | ✅ |
@@ -15,17 +15,17 @@ Official client libraries and platform integrations for the [Hydra payments API]
 | **[Ruby](./ruby/README.md)** | `ruby/` | `hydra_payments` | ✅ 76 tests |
 | **[iOS (Swift)](./ios/README.md)** | `ios/` | `HydraPayments` | ✅ 71 tests |
 | **[Android (Kotlin)](./android/README.md)** | `android/` | `com.hydrapayments:sdk` | ✅ 69 tests |
-| **[TypeScript](./typescript/README.md)** | `typescript/` | `@hydra-payments/sdk` | ✅ |
-| **[React Native](./react-native/README.md)** | `react-native/` | `@hydra-payments/react-native-sdk` | ✅ 59 tests |
+| **[TypeScript](./typescript/README.md)** | `typescript/` | `@hydra-pay/sdk` | ✅ |
+| **[React Native](./react-native/README.md)** | `react-native/` | `@hydra-pay/react-native-sdk` | ✅ 59 tests |
 | **[Terraform](./terraform/README.md)** | `terraform/` | `registry.terraform.io/hydra-payments/hydra` | ✅ 7 resources + 7 data sources |
-| **[JavaScript (browser)](./javascript/)** | `javascript/` | `@hydrapp/sdk` | ✅ |
+| **[JavaScript (browser)](./javascript/)** | `javascript/` | `@hydra-pay/sdk` | ✅ |
 | **[HTML (CDN)](./html/)** | `html/` | `<script>` tag | ✅ |
 
 ## Quick Install
 
 ```bash
 # Go
-go get github.com/hydra-payments/go-sdk
+go get github.com/hydra-pay/go-sdk
 
 # PHP
 composer require hydra-payments/sdk-php
@@ -46,16 +46,16 @@ dotnet add package HydraPayments.Sdk
 gem 'hydra_payments'
 
 # Node.js/TypeScript
-npm add @hydra-payments/sdk
+npm add @hydra-pay/sdk
 
 # React Native
-npm add @hydra-payments/react-native-sdk
+npm add @hydra-pay/react-native-sdk
 
 # Terraform
 terraform init  # with required_providers config
 
 # JavaScript (browser)
-npm install @hydrapp/sdk
+npm install @hydra-pay/sdk
 ```
 
 ## Platform Integrations

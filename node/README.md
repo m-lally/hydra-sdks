@@ -5,13 +5,13 @@ Server-side SDK for the Hydra payments API.
 ## Installation
 
 ```bash
-npm install @hydrapp/sdk-node
+npm install @hydra-pay/sdk-node
 ```
 
 ## Usage
 
 ```javascript
-const Hydra = require('@hydrapp/sdk-node');
+const Hydra = require('@hydra-pay/sdk-node');
 
 const hydra = new Hydra('sk_live_abc123');
 

@@ -23,7 +23,7 @@ Or use the latest from git:
 
 ```toml
 [dependencies]
-hydra-sdk = { git = "https://github.com/hydra-payments/sdk-rust" }
+hydra-sdk = { git = "https://github.com/hydra-pay/sdk-rust" }
 ```
 
 ## Quick Start

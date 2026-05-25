@@ -7,7 +7,7 @@ with automatic HMAC-SHA256 request signing.
 
 # Quick Start
 
-	import "github.com/hydra-payments/go-sdk"
+	import "github.com/hydra-pay/go-sdk"
 
 	func main() {
 		client := hydra.NewClient("http://localhost:8080", "pk_xxx", "sk_xxx")

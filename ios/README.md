@@ -16,11 +16,11 @@ Add to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/hydra-payments/hydra.git", branch: "main")
+    .package(url: "https://github.com/hydra-pay/hydra.git", branch: "main")
 ]
 ```
 
-Or add via Xcode: **File → Add Packages...** → `https://github.com/hydra-payments/hydra.git`
+Or add via Xcode: **File → Add Packages...** → `https://github.com/hydra-pay/hydra.git`
 
 ## Usage
 
@@ -28,7 +28,7 @@ Or add via Xcode: **File → Add Packages...** → `https://github.com/hydra-pay
 import HydraPayments
 
 let client = HydraClientBuilder()
-    .baseURL("https://api.wideeyedigital.co.uk")
+    .baseURL("https://api.hydrapay.io")
     .apiKey("your-api-key")
     .secretKey("your-secret-key")
     .build()
@@ -64,7 +64,7 @@ print(fetched.status)
 
 ```swift
 let client = HydraClientBuilder()
-    .baseURL("https://api.wideeyedigital.co.uk")
+    .baseURL("https://api.hydrapay.io")
     .apiKey("sk_test_...")
     .secretKey("whsec_...")
     .defaultCurrency("USD")
