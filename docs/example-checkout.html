@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hydra Payments - Example Checkout</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      width: 100%;
+      padding: 40px;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      color: #667eea;
+      margin-bottom: 10px;
+    }
+    
+    .subtitle {
+      color: #666;
+      font-size: 14px;
+    }
+    
+    .product-section {
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .product {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    
+    .product-name {
+      font-weight: 500;
+      color: #333;
+    }
+    
+    .product-price {
+      color: #667eea;
+      font-weight: 600;
+    }
+    
+    .order-summary {
+      background: #f9f9f9;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      color: #666;
+      font-size: 14px;
+    }
+    
+    .summary-row.total {
+      border-top: 2px solid #e0e0e0;
+      padding-top: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .summary-row.total .amount {
+      color: #667eea;
+    }
+    
+    .status-box {
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: none;
+      font-size: 14px;
+    }
+    
+    .status-box.info {
+      display: block;
+      background: #e3f2fd;
+      color: #1976d2;
+      border-left: 4px solid #1976d2;
+    }
+    
+    .status-box.success {
+      display: block;
+      background: #e8f5e9;
+      color: #388e3c;
+      border-left: 4px solid #388e3c;
+    }
+    
+    .status-box.error {
+      display: block;
+      background: #ffebee;
+      color: #d32f2f;
+      border-left: 4px solid #d32f2f;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+    
+    input:focus, select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+    }
+    
+    button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.3s, transform 0.2s;
+    }
+    
+    button:hover:not(:disabled) {
+      opacity: 0.95;
+      transform: translateY(-2px);
+    }
+    
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .payment-details {
+      background: #f9f9f9;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 20px;
+      display: none;
+      font-size: 13px;
+    }
+    
+    .payment-details.show {
+      display: block;
+    }
+    
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      word-break: break-all;
+    }
+    
+    .detail-label {
+      font-weight: 500;
+      color: #666;
+      flex: 0 0 140px;
+    }
+    
+    .detail-value {
+      color: #333;
+      flex: 1;
+      text-align: right;
+    }
+    
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.8s linear infinite;
+      margin-right: 8px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .config-section {
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+      font-size: 12px;
+    }
+    
+    .config-label {
+      color: #666;
+      margin-bottom: 4px;
+    }
+    
+    .config-value {
+      color: #333;
+      font-family: monospace;
+      word-break: break-all;
+    }
+    
+    /* AI Assistant Styles */
+    .ai-fab {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 10px 25px rgba(118, 75, 162, 0.4);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 1000;
+    }
+    
+    .ai-fab:hover {
+      transform: scale(1.1);
+      box-shadow: 0 15px 35px rgba(118, 75, 162, 0.5);
+    }
+    
+    .ai-chat-widget {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 350px;
+      max-height: 500px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      z-index: 999;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      overflow: hidden;
+    }
+    
+    .ai-chat-widget.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: all;
+    }
+    
+    .ai-chat-header {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+      color: white;
+      padding: 16px 20px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .ai-avatar {
+      width: 32px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    
+    .ai-chat-body {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 250px;
+      max-height: 350px;
+    }
+    
+    .ai-msg {
+      max-width: 85%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      font-size: 14px;
+      line-height: 1.4;
+      animation: messageSlideIn 0.3s ease-out;
+    }
+    
+    @keyframes messageSlideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .ai-msg.bot {
+      background: rgba(102, 126, 234, 0.1);
+      color: #333;
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+    
+    .ai-msg.user {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+    
+    .ai-chat-footer {
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.9);
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      display: flex;
+      gap: 10px;
+    }
+    
+    .ai-chat-input {
+      flex: 1;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 10px 14px;
+      border-radius: 20px;
+      outline: none;
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.9);
+      transition: border-color 0.3s;
+      width: 100%;
+    }
+    
+    .ai-chat-input:focus {
+      border-color: #667eea;
+    }
+    
+    .ai-chat-send {
+      background: none;
+      border: none;
+      color: #667eea;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+      width: auto;
+      padding: 0;
+    }
+    
+    .ai-chat-send:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .ai-chat-send:disabled:hover {
+      transform: none;
+    }
+    
+    .ai-chat-send:hover {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+    
+    .typing-indicator {
+      display: flex;
+      gap: 4px;
+      padding: 12px 16px;
+    }
+    
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: #888;
+      border-radius: 50%;
+      animation: typingJump 1.4s infinite ease-in-out both;
+    }
+    
+    .dot:nth-child(1) { animation-delay: -0.32s; }
+    .dot:nth-child(2) { animation-delay: -0.16s; }
+    
+    @keyframes typingJump {
+      0%, 80%, 100% { transform: scale(0); }
+      40% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">💰 Hydra Payments</div>
+      <div class="subtitle">Example Checkout Integration</div>
+    </div>
+    
+    <div id="statusBox" class="status-box"></div>
+    
+    <div class="config-section">
+      <div class="config-label">API Configuration</div>
+      <div class="config-value" id="configStatus">Loading...</div>
+    </div>
+    
+    <form id="checkoutForm">
+      <div class="product-section">
+        <h3 style="margin-bottom: 16px; color: #333;">Order Summary</h3>
+        
+        <div class="product">
+          <span class="product-name">Premium Web Hosting (1 year)</span>
+          <span class="product-price">£89.99</span>
+        </div>
+        <div class="product">
+          <span class="product-name">SSL Certificate</span>
+          <span class="product-price">£9.99</span>
+        </div>
+      </div>
+      
+      <div class="order-summary">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>£99.98</span>
+        </div>
+        <div class="summary-row">
+          <span>Tax (0%)</span>
+          <span>£0.00</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span class="amount">£99.98</span>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input 
+          type="email" 
+          id="email" 
+          placeholder="customer@example.com" 
+          required
+        >
+      </div>
+      
+      <div class="form-group">
+        <label for="currency">Currency</label>
+        <select id="currency" required>
+          <option value="GBP">GBP (£)</option>
+          <option value="USD">USD ($)</option>
+          <option value="EUR">EUR (€)</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <div class="checkbox-group">
+          <input 
+            type="checkbox" 
+            id="testMarketplace"
+          >
+          <label for="testMarketplace" style="margin: 0;">
+            Test Marketplace Split (60% vendor / 40% platform)
+          </label>
+        </div>
+      </div>
+      
+      <button type="submit" id="payButton">
+        Pay £99.98
+      </button>
+    </form>
+    
+    <div id="paymentDetails" class="payment-details">
+      <h4 style="margin-bottom: 12px;">Payment Details</h4>
+      <div class="detail-row">
+        <span class="detail-label">Transaction ID:</span>
+        <span class="detail-value" id="txId">-</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Status:</span>
+        <span class="detail-value" id="txStatus">-</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Amount:</span>
+        <span class="detail-value" id="txAmount">-</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Created:</span>
+        <span class="detail-value" id="txTime">-</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Assistant Chat Widget -->
+  <div class="ai-fab" id="aiFab">✨</div>
+  <div class="ai-chat-widget" id="aiChatWidget">
+    <div class="ai-chat-header">
+      <div class="ai-avatar">✨</div>
+      <div>Hydra Assistant</div>
+    </div>
+    <div class="ai-chat-body" id="aiChatBody">
+      <div class="ai-msg bot">Hi there! 👋 I'm your interactive AI assistant. Ask me anything about your checkout, SSL certificates, or our hosting plans.</div>
+    </div>
+    <div class="ai-chat-footer">
+      <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="Ask a question..." autocomplete="off">
+      <button class="ai-chat-send" id="aiChatSend">➤</button>
+    </div>
+  </div>
+
+  <script>
+    // Configuration
+    const CONFIG = {
+      apiKey: 'test-api-key-12345',
+      hmacSecret: 'test-hmac-secret-67890',
+      baseUrl: 'http://localhost:8080',
+      merchantId: '550e8400-e29b-41d4-a716-446655440000',
+      merchantAccountId: '660e8400-e29b-41d4-a716-446655440001'
+    };
+
+    const form = document.getElementById('checkoutForm');
+    const payButton = document.getElementById('payButton');
+    const statusBox = document.getElementById('statusBox');
+    const paymentDetails = document.getElementById('paymentDetails');
+    const currencySelect = document.getElementById('currency');
+    const testMarketplaceCheckbox = document.getElementById('testMarketplace');
+
+    // Initialize
+    updateConfigStatus();
+
+    // Utility: Show status message
+    function showStatus(message, type = 'info') {
+      statusBox.textContent = message;
+      statusBox.className = `status-box ${type}`;
+    }
+
+    // Utility: Generate HMAC signature
+    async function createSignature(method, path, timestamp, body) {
+      const message = `${method}:${path}:${timestamp}:${body}`;
+      const encoder = new TextEncoder();
+      const data = encoder.encode(message);
+      const keyData = encoder.encode(CONFIG.hmacSecret);
+
+      const key = await crypto.subtle.importKey(
+        'raw',
+        keyData,
+        { name: 'HMAC', hash: 'SHA-256' },
+        false,
+        ['sign']
+      );
+
+      const signature = await crypto.subtle.sign('HMAC', key, data);
+      const hashArray = Array.from(new Uint8Array(signature));
+      const hashHex = btoa(String.fromCharCode.apply(null, hashArray));
+      return hashHex;
+    }
+
+    // Utility: Make authenticated request
+    async function apiRequest(method, path, body = null) {
+      const timestamp = Date.now().toString();
+      const bodyStr = body ? JSON.stringify(body) : '';
+      const signature = await createSignature(method, path, timestamp, bodyStr);
+
+      const url = `${CONFIG.baseUrl}/v1${path}`;
+      const options = {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-Key': CONFIG.apiKey,
+          'X-Timestamp': timestamp,
+          'X-Signature': signature,
+        },
+      };
+
+      if (body) {
+        options.body = bodyStr;
+      }
+
+      const response = await fetch(url, options);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || `HTTP ${response.status}`);
+      }
+
+      return data;
+    }
+
+    // Check API health
+    async function updateConfigStatus() {
+      try {
+        const health = await fetch(`${CONFIG.baseUrl}/health`).then(r => r.json());
+        const status = health.database === 'connected' ? '✅ Connected' : '⚠️ Degraded';
+        document.getElementById('configStatus').innerHTML = `
+          ${status} to ${CONFIG.baseUrl}
+        `;
+      } catch (e) {
+        document.getElementById('configStatus').textContent = 
+          `❌ Cannot connect to ${CONFIG.baseUrl}`;
+      }
+    }
+
+    // Get or create account
+    async function getOrCreateAccount(ownerId, type = 'personal') {
+      const storageKey = `hydra_account_${ownerId}`;
+      let accountId = localStorage.getItem(storageKey);
+
+      if (!accountId) {
+         const response = await apiRequest('POST', '/v1/api/accounts', {
+          owner_id: ownerId,
+          account_type: type,
+          currency: currencySelect.value,
+        });
+
+        if (!response.success) {
+          throw new Error(response.error);
+        }
+
+        accountId = response.data.id;
+        localStorage.setItem(storageKey, accountId);
+      }
+
+      return accountId;
+    }
+
+    // Create transfer (simple payment)
+    async function createTransfer(sourceId, destId, amount, reference) {
+         const response = await apiRequest('POST', '/v1/api/transactions', {
+        source_id: sourceId,
+        dest_id: destId,
+        amount: amount,
+        currency: currencySelect.value,
+        reference: reference,
+      });
+
+      if (!response.success) {
+        throw new Error(response.error);
+      }
+
+      return response.data;
+    }
+
+    // Execute split payment
+    async function executeSplit(sourceId, vendors, amount, reference) {
+         const response = await apiRequest('POST', '/v1/api/splits/execute', {
+        source_id: sourceId,
+        splits: vendors,
+        total_amount: amount,
+        currency: currencySelect.value,
+        reference: reference,
+      });
+
+      if (!response.success) {
+        throw new Error(response.error);
+      }
+
+      return response.data;
+    }
+
+    // Format amount for display
+    function formatAmount(amount, currency) {
+      const symbols = { GBP: '£', USD: '$', EUR: '€' };
+      return `${symbols[currency] || currency} ${parseFloat(amount).toFixed(2)}`;
+    }
+
+    // Display payment results
+    function displayPaymentResult(tx) {
+      document.getElementById('txId').textContent = tx.id;
+      document.getElementById('txStatus').textContent = tx.status.toUpperCase();
+      document.getElementById('txAmount').textContent = formatAmount(tx.amount, currencySelect.value);
+      document.getElementById('txTime').textContent = new Date(tx.created_at).toLocaleString();
+      paymentDetails.classList.add('show');
+    }
+
+    // Handle form submission
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      payButton.disabled = true;
+      const originalText = payButton.textContent;
+      payButton.innerHTML = '<span class="spinner"></span>Processing...';
+      paymentDetails.classList.remove('show');
+      statusBox.className = 'status-box';
+
+      try {
+        showStatus('Initializing payment...', 'info');
+
+        // Generate customer ID from email (in real app, use authenticated user)
+        const email = document.getElementById('email').value;
+        
+        // Convert email to a UUID deterministically
+        function uuidFromEmail(email) {
+          const str = email.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0);
+          const hash = Math.abs(str).toString(16).padStart(12, '0');
+          const part1 = hash.slice(0, 8);
+          const part2 = hash.slice(0, 4);
+          const part3 = '4' + hash.slice(0, 3);
+          const part4 = '8' + hash.slice(0, 3);
+          const part5 = (hash + hash + hash).slice(0, 12);
+          return `${part1}-${part2}-${part3}-${part4}-${part5}`;
+        }
+        
+        const customerId = uuidFromEmail(email);
+        console.log('Customer ID:', customerId);
+
+        // Get or create customer account
+        showStatus('Creating customer account...', 'info');
+        const customerAccountId = await getOrCreateAccount(customerId, 'personal');
+
+        // Get or create merchant account
+        const merchantAccountId = await getOrCreateAccount(CONFIG.merchantId, 'company');
+
+        // Process payment
+        const amount = '99.98';
+        const orderId = `ORDER-${Date.now()}`;
+
+        // Fund customer account for testing (simulates payment method on file)
+        showStatus('Setting up payment method...', 'info');
+        try {
+            await apiRequest('POST', '/v1/api/transactions/credit', {
+            dest_id: customerAccountId,
+            amount: '500.00',
+            currency: currencySelect.value,
+            reference: 'FUND-' + orderId,
+          });
+        } catch (e) {
+          console.error('Funding error:', e);
+        }
+
+        if (testMarketplaceCheckbox.checked) {
+          // Create/fund platform account for split
+          const platformId = '00000000-0000-0000-0000-000000000000';
+          const platformAccountId = await getOrCreateAccount(platformId, 'company');
+          
+          // Fund customer for split
+          showStatus('Setting up payment method...', 'info');
+          try {
+          await apiRequest('POST', '/v1/api/transactions/credit', {
+              dest_id: customerAccountId,
+              amount: '500.00',
+              currency: currencySelect.value,
+              reference: 'FUND-' + orderId,
+            });
+          } catch (e) {
+            console.error('Funding error:', e);
+          }
+          
+          // Execute split payment
+          showStatus('Processing split payment...', 'info');
+          const transactions = await executeSplit(customerAccountId, [
+            { account_id: merchantAccountId, percentage: '60' },
+            { account_id: platformAccountId, percentage: '40' },
+          ], amount, orderId);
+
+          showStatus('✓ Split payment completed successfully!', 'success');
+          
+          // Display first transaction
+          if (transactions.length > 0) {
+            displayPaymentResult({
+              ...transactions[0],
+              amount: amount,
+            });
+          }
+        } else {
+          // Execute simple transfer
+          showStatus('Processing payment...', 'info');
+          const transaction = await createTransfer(
+            customerAccountId,
+            merchantAccountId,
+            amount,
+            orderId
+          );
+
+          showStatus('✓ Payment completed successfully!', 'success');
+          displayPaymentResult(transaction);
+        }
+
+      } catch (error) {
+        console.error('Payment error:', error);
+        showStatus(`✗ Error: ${error.message}`, 'error');
+      } finally {
+        payButton.disabled = false;
+        payButton.textContent = originalText;
+      }
+    });
+
+    // Update pay button text when currency changes
+    currencySelect.addEventListener('change', () => {
+      const symbols = { GBP: '£', USD: '$', EUR: '€' };
+      payButton.textContent = `Pay ${symbols[currencySelect.value]} 99.98`;
+    });
+
+    // AI Assistant Logic
+    const aiFab = document.getElementById('aiFab');
+    const aiChatWidget = document.getElementById('aiChatWidget');
+    const aiChatBody = document.getElementById('aiChatBody');
+    const aiChatInput = document.getElementById('aiChatInput');
+    const aiChatSend = document.getElementById('aiChatSend');
+
+    let isChatOpen = false;
+
+    aiFab.addEventListener('click', () => {
+      isChatOpen = !isChatOpen;
+      if (isChatOpen) {
+        aiChatWidget.classList.add('active');
+        aiFab.style.transform = 'rotate(45deg)';
+        aiChatWidget.style.pointerEvents = 'all';
+        setTimeout(() => aiChatInput.focus(), 300);
+      } else {
+        aiChatWidget.classList.remove('active');
+        aiFab.style.transform = 'rotate(0deg)';
+        aiChatWidget.style.pointerEvents = 'none';
+      }
+    });
+
+    function addMessage(text, sender) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `ai-msg ${sender}`;
+      msgDiv.textContent = text;
+      aiChatBody.appendChild(msgDiv);
+      aiChatBody.scrollTop = aiChatBody.scrollHeight;
+      return msgDiv;
+    }
+
+    function showTypingIndicator() {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'ai-msg bot typing-indicator';
+      msgDiv.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+      aiChatBody.appendChild(msgDiv);
+      aiChatBody.scrollTop = aiChatBody.scrollHeight;
+      return msgDiv;
+    }
+
+    const FAQ = [
+      { q: 'card', a: 'This demo uses test mode. No real cards are charged. Use any test card number like 4242 4242 4242 4242.' },
+      { q: 'ssl', a: 'Our SSL certificates include Domain Validation (DV) and Organization Validation (OV) options, starting from £9.99/yr.' },
+      { q: 'hosting', a: 'Premium Web Hosting includes 99.9% uptime SLA, daily backups, and 24/7 support.' },
+      { q: 'refund', a: 'Full refunds are available within 30 days of purchase. Partial refunds prorated based on usage.' },
+      { q: 'support', a: '24/7 support is available via email (support@hydra-payments.com) and live chat.' },
+    ];
+
+    function getBotReply(text) {
+      const lower = text.toLowerCase();
+      for (const faq of FAQ) {
+        if (lower.includes(faq.q)) return faq.a;
+      }
+      if (lower.includes('hello') || lower.includes('hi')) return 'Hello! How can I help you today? Ask me about our hosting, SSL certificates, or payment options.';
+      if (lower.includes('thank')) return "You're welcome! Is there anything else I can help with?";
+      if (lower.includes('price') || lower.includes('cost') || lower.includes('pricing')) return 'Our Premium Web Hosting is £89.99/yr and SSL Certificates start at £9.99/yr. The total shown in the order summary includes both.';
+      return "I'm your checkout assistant. I can help with questions about our products, payment, refunds, or support. Try asking about cards, SSL, hosting, or refunds!";
+    }
+
+    async function handleAISubmit(e) {
+      if (e) e.preventDefault();
+      const text = aiChatInput.value.trim();
+      if (!text) return;
+
+      addMessage(text, 'user');
+      aiChatInput.value = '';
+
+      const typingMenu = showTypingIndicator();
+
+      // Simulate response delay
+      await new Promise(r => setTimeout(r, 600 + Math.random() * 400));
+
+      typingMenu.remove();
+      addMessage(getBotReply(text), 'bot');
+    }
+
+    aiChatSend.addEventListener('click', handleAISubmit);
+    aiChatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleAISubmit(e);
+    });
+  </script>
+</body>
+</html>

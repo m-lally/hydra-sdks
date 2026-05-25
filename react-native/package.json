@@ -1,0 +1,77 @@
+{
+  "name": "@hydra-payments/react-native-sdk",
+  "version": "1.0.0",
+  "description": "React Native SDK for Hydra Payment Service — HMAC-signed client, types, and React Native UI components",
+  "license": "MIT",
+  "author": "Hydra Payments",
+  "homepage": "https://github.com/hydra-payments/sdk#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hydra-payments/sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hydra-payments/sdk/issues"
+  },
+  "keywords": [
+    "hydra",
+    "payments",
+    "sdk",
+    "react-native",
+    "api-client",
+    "payment-gateway",
+    "hmac",
+    "mobile"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.js"
+    },
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "require": "./dist/components/index.js",
+      "import": "./dist/components/index.js"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prebuild": "rm -rf dist",
+    "test": "node --test 'src/__tests__/**/*.test.js'",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "dependencies": {
+    "axios": "^1.6.7"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-native": "^0.73.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": false
+    },
+    "react-native": {
+      "optional": false
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.16",
+    "@types/react": "^18.2.0",
+    "@types/react-native": "^0.73.0",
+    "react": "^18.2.0",
+    "react-native": "^0.73.0",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

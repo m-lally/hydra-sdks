@@ -1,0 +1,94 @@
+/**
+ * Hydra Payment Gateway Plugin Styles
+ */
+
+/* Payment Form Container */
+#hydra-payment-form-container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Form Elements */
+#hydra-payment-form {
+    margin-bottom: 20px;
+    min-height: 50px;
+}
+
+/* Payment Button */
+#hydra-payment-button {
+    background-color: #007cba;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+#hydra-payment-button:hover {
+    background-color: #005a87;
+}
+
+#hydra-payment-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Error Messages */
+.hydra-payment-error {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    display: none;
+}
+
+.hydra-payment-error.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    display: block;
+}
+
+.hydra-payment-error.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    display: block;
+}
+
+/* Loading State */
+#hydra-payment-button.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+#hydra-payment-button.loading::after {
+    content: " Processing...";
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    #hydra-payment-form-container {
+        margin: 10px;
+        padding: 15px;
+    }
+    
+    #hydra-payment-button {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+}
+
+/* Focus Accessibility */
+#hydra-payment-button:focus {
+    outline: 2px solid #007cba;
+    outline-offset: 2px;
+}

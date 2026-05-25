@@ -1,102 +1,107 @@
-# Hydra SDKs
+# Hydra SDKs & Integrations
 
-Official client libraries for the [Hydra payments API](https://hydrapay.io).
+Official client libraries and platform integrations for the [Hydra payments API](https://hydrapay.io).
 
-## Quickstart
+## Available SDKs
+
+| Language | Directory | Package | Status |
+|----------|-----------|---------|--------|
+| **[Go](./go/README.md)** | `go/` | `github.com/hydra-payments/go-sdk` | ✅ 60 tests |
+| **[PHP/Laravel](./php/README.md)** | `php/` | `hydra-payments/sdk-php` | ✅ 129 tests |
+| **[Python](./python/README.md)** | `python/` | `hydra-payments` | ✅ |
+| **[Rust](./rust/README.md)** | `rust/` | `hydra-sdk` | ✅ |
+| **[Java](./java/README.md)** | `java/` | `com.hydrapayments:sdk-java` | ✅ 85 tests |
+| **[.NET](./dotnet/README.md)** | `dotnet/` | `HydraPayments.Sdk` | ✅ 81 tests |
+| **[Ruby](./ruby/README.md)** | `ruby/` | `hydra_payments` | ✅ 76 tests |
+| **[iOS (Swift)](./ios/README.md)** | `ios/` | `HydraPayments` | ✅ 71 tests |
+| **[Android (Kotlin)](./android/README.md)** | `android/` | `com.hydrapayments:sdk` | ✅ 69 tests |
+| **[TypeScript](./typescript/README.md)** | `typescript/` | `@hydra-payments/sdk` | ✅ |
+| **[React Native](./react-native/README.md)** | `react-native/` | `@hydra-payments/react-native-sdk` | ✅ 59 tests |
+| **[Terraform](./terraform/README.md)** | `terraform/` | `registry.terraform.io/hydra-payments/hydra` | ✅ 7 resources + 7 data sources |
+| **[JavaScript (browser)](./javascript/)** | `javascript/` | `@hydrapp/sdk` | ✅ |
+| **[HTML (CDN)](./html/)** | `html/` | `<script>` tag | ✅ |
+
+## Quick Install
 
 ```bash
-# JavaScript (browser)
-npm install @hydrapp/sdk
+# Go
+go get github.com/hydra-payments/go-sdk
 
-# Node.js
-npm install @hydrapp/sdk-node
+# PHP
+composer require hydra-payments/sdk-php
 
 # Python
-pip install hydra-sdk
+pip install hydra-payments
 
 # Rust
 cargo add hydra-sdk
+
+# Java (Maven)
+# Add to pom.xml: com.hydrapayments:sdk-java:0.1.0
+
+# .NET (NuGet)
+dotnet add package HydraPayments.Sdk
+
+# Ruby (Gemfile)
+gem 'hydra_payments'
+
+# Node.js/TypeScript
+npm add @hydra-payments/sdk
+
+# React Native
+npm add @hydra-payments/react-native-sdk
+
+# Terraform
+terraform init  # with required_providers config
+
+# JavaScript (browser)
+npm install @hydrapp/sdk
 ```
 
-### Initialize
+## Platform Integrations
 
-```javascript
-// JavaScript / Node.js
-import Hydra from '@hydrapp/sdk';
+| Platform | Directory | Description |
+|----------|-----------|-------------|
+| **[Shopify](./shopify-hydra-integration/)** | `shopify-hydra-integration/` | Embedded Shopify app — Hydra as a custom payment method |
+| **[WordPress](./wp-hydra-payment/)** | `wp-hydra-payment/` | WordPress/WooCommerce payment gateway plugin |
 
-const hydra = new Hydra('sk_live_abc123');
-```
+## MCP Server
 
-```python
-# Python
-from hydra import Hydra
-
-hydra = Hydra('sk_live_abc123')
-```
-
-```rust
-// Rust
-use hydra_sdk::Hydra;
-
-let hydra = Hydra::new("sk_live_abc123");
-```
-
-### Create a payment
-
-```javascript
-const payment = await hydra.payments.create({
-  amount: 2000,
-  currency: 'gbp',
-  merchantId: 'mrp_abc123',
-  paymentMethods: ['card'],
-  capture: true,
-});
-```
-
-```python
-payment = hydra.payments.create(
-    amount=2000,
-    currency='gbp',
-    merchant_id='mrp_abc123',
-    payment_methods=['card'],
-    capture=True,
-)
-```
-
-```rust
-let payment = hydra.payments().create(CreatePayment {
-    amount: 2000,
-    currency: "gbp".into(),
-    merchant_id: "mrp_abc123".into(),
-    payment_methods: vec!["card".into()],
-    capture: true,
-})?;
-```
-
-## SDKs
-
-| Language | Package | Source |
-|----------|---------|--------|
-| JavaScript (browser) | `@hydrapp/sdk` | [javascript/](./javascript) |
-| Node.js | `@hydrapp/sdk-node` | [node/](./node) |
-| Python | `hydra-sdk` | [python/](./python) |
-| Rust | `hydra-sdk` | [rust/](./rust) |
-| HTML (CDN) | `<script>` tag | [html/](./html) |
-
-## Features
-
-- **Payments** — create, list, retrieve, capture, cancel
-- **Checkout** — one-time checkout sessions
-- **Refunds** — full and partial refunds
-- **Customers** — create, list, retrieve
-- **Bank Accounts** — validate and link
-- **Disputes** — list, retrieve, update evidence
-- **Webhooks** — verify signatures, parse events
-- **Balance** — retrieve merchant balance
+| Tool | Directory | Description |
+|------|-----------|-------------|
+| **[MCP Server](./mcp-server/)** | `mcp-server/` | Model Context Protocol server for AI agent integration |
 
 ## Documentation
 
-Full API reference at [docs.hydrapp.com](https://hydrapay.io/docs).
+| Document | Description |
+|----------|-------------|
+| [Integration Guide](./docs/INTEGRATION_GUIDE.md) | Comprehensive integration guide with code examples in all SDK languages |
+| [Getting Started](./docs/GETTING_STARTED.md) | 5-minute quick start guide |
+| [Payment Gateway Integration](./docs/payment-gateway-integration.md) | Payment gateway-specific integration (tokenization, intents, refunds) |
+| [Example Checkout](./docs/example-checkout.html) | Interactive checkout demo HTML page |
+
+## Common Features
+
+All SDKs support:
+
+- **Core Ledger API**: Accounts, transactions, wallets, splits
+- **Payment Gateway**: Card tokenization, payment intents, refunds, commission, webhooks
+- **Health Check**: Service health monitoring
+- **HMAC-SHA256 Authentication**: Automatic request signing
+- **Typed Errors**: Language-specific error types mapped from HTTP status codes
+- **i18n Support**: Configurable locale and default currency
+
+## Architecture
+
+```
+Client App
+    │
+    ▼ (signed HTTP request)
+Hydra API
+    │
+    ├── Core Ledger (/v1/api/) — Accounts, Transactions, Wallets, Splits
+    └── Payment Gateway (/v1/payments/) — Tokens, Intents, Refunds
+```
 
 ## License
 

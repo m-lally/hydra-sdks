@@ -1,0 +1,49 @@
+{
+    "name": "hydra-payments/sdk-php",
+    "description": "PHP SDK for Hydra Payment Service — HMAC-signed client, DTOs, Laravel integration",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hydra Payments",
+            "homepage": "https://github.com/hydra-payments"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "guzzlehttp/guzzle": "^7.0",
+        "guzzlehttp/psr7": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "HydraPayments\\Sdk\\": "src/"
+        },
+        "classmap": [
+            "src/Exception.php",
+            "src/Type.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "HydraPayments\\Sdk\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "HydraPayments\\Sdk\\HydraServiceProvider"
+            ],
+            "aliases": {
+                "Hydra": "HydraPayments\\Sdk\\Facades\\Hydra"
+            }
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-html coverage"
+    },
+    "minimum-stability": "stable"
+}

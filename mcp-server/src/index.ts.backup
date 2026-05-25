@@ -1,0 +1,261 @@
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { z } from 'zod';
+import { HydraClient, HydraConfig } from './hydraClient.js';
+import * as dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
+
+// Validate required environment variables
+const hydraApiUrl = process.env.HYDRA_API_URL;
+const hydraSecretKey = process.env.HYDRA_SECRET_KEY;
+
+if (!hydraApiUrl || !hydraSecretKey) {
+  console.error('Error: HYDRA_API_URL and HYDRA_SECRET_KEY environment variables are required');
+  process.exit(1);
+}
+
+// Initialize Hydra client
+const hydraConfig: HydraConfig = {
+  apiUrl: hydraApiUrl,
+  secretKey: hydraSecretKey,
+};
+const hydraClient = new HydraClient(hydraConfig);
+
+// Create MCP server
+const server = new McpServer({
+  name: 'hydra-payment-gateway',
+  version: '1.0.0'
+});
+
+// Helper function to create a tool response
+function createToolResponse(data: any) {
+  return {
+    content: [{ type: 'text' as const, text: JSON.stringify(data, null, 2) }],
+  };
+}
+
+// Helper function to create an error response
+function createErrorResponse(message: string) {
+  return {
+    content: [{ type: 'text' as const, text: message }],
+    isError: true,
+  };
+}
+
+// ====================
+// Payment Intent Tools
+// ====================
+
+// Create Payment Intent
+server.registerTool('create_payment_intent', {
+  description: 'Create a payment intent with Hydra Payment Gateway',
+  inputSchema: z.object({
+    amount: z.number().int().positive().describe('Amount in smallest currency unit (e.g., cents for USD)'),
+    currency: z.string().length(3).uppercase().describe('3-letter currency code (e.g., USD, EUR)'),
+    description: z.string().optional().describe('Description of the payment'),
+    paymentMethod: z.string().optional().describe('Payment method type (e.g., card)'),
+    metadata: z.record(z.any()).optional().describe('Additional metadata key-value pairs'),
+  }),
+}, async (args, extra) => {
+  const { amount, currency, description, paymentMethod, metadata } = args;
+  try {
+    const intent = await hydraClient.createPaymentIntent({
+      amount,
+      currency,
+      description,
+      paymentMethod,
+      metadata,
+    });
+    return createToolResponse(intent);
+  } catch (error: any) {
+    return createErrorResponse(`Error creating payment intent: ${error.message}`);
+  }
+});
+
+// Confirm Payment Intent
+server.registerTool('confirm_payment_intent', {
+  description: 'Confirm a payment intent with Hydra Payment Gateway',
+  inputSchema: z.object({
+    intentId: z.string().describe('ID of the payment intent to confirm'),
+    paymentMethod: z.string().optional().describe('Payment method to use for confirmation'),
+    returnUrl: z.string().url().optional().describe('URL to redirect the user after confirmation'),
+  }),
+}, async (args, extra) => {
+  const { intentId, paymentMethod, returnUrl } = args;
+  try {
+    const intent = await hydraClient.confirmPaymentIntent(intentId, { paymentMethod, returnUrl });
+    return createToolResponse(intent);
+  } catch (error: any) {
+    return createErrorResponse(`Error confirming payment intent: ${error.message}`);
+  }
+});
+
+// Retrieve Payment Intent
+server.registerTool('retrieve_payment_intent', {
+  description: 'Retrieve a payment intent by ID from Hydra Payment Gateway',
+  inputSchema: z.object({
+    intentId: z.string().describe('ID of the payment intent to retrieve'),
+  }),
+}, async (args, extra) => {
+  const { intentId } = args;
+  try {
+    const intent = await hydraClient.retrievePaymentIntent(intentId);
+    return createToolResponse(intent);
+  } catch (error: any) {
+    return createErrorResponse(`Error retrieving payment intent: ${error.message}`);
+  }
+});
+
+// Refund Payment Intent
+server.registerTool('refund_payment_intent', {
+  description: 'Refund a payment intent with Hydra Payment Gateway',
+  inputSchema: z.object({
+    intentId: z.string().describe('ID of the payment intent to refund'),
+    amount: z.number().int().positive().optional().describe('Amount to refund in smallest currency unit (if not specified, refunds full amount)'),
+    reason: z.string().optional().describe('Reason for the refund'),
+    metadata: z.record(z.any()).optional().describe('Additional metadata key-value pairs'),
+  }),
+}, async (args, extra) => {
+  const { intentId, amount, reason, metadata } = args;
+  try {
+    const refund = await hydraClient.refundPaymentIntent(intentId, { amount, reason, metadata });
+    return createToolResponse(refund);
+  } catch (error: any) {
+    return createErrorResponse(`Error refunding payment intent: ${error.message}`);
+  }
+});
+
+// ====================
+// Customer Tools
+// ====================
+
+// Create Customer
+server.registerTool('create_customer', {
+  description: 'Create a customer in Hydra Payment Gateway',
+  inputSchema: z.object({
+    email: z.string().email().optional().describe('Customer email address'),
+    name: z.string().optional().describe('Customer full name'),
+    phone: z.string().optional().describe('Customer phone number'),
+    address: z.object({
+      line1: z.string().optional(),
+      line2: z.string().optional(),
+      city: z.string().optional(),
+      state: z.string().optional(),
+      postal_code: z.string().optional(),
+      country: z.string().optional(),
+    }).optional(),
+    metadata: z.record(z.any()).optional().describe('Additional metadata key-value pairs'),
+  }),
+}, async (args, extra) => {
+  const { email, name, phone, address, metadata } = args;
+  try {
+    const customer = await hydraClient.createCustomer({ email, name, phone, address, metadata });
+    return createToolResponse(customer);
+  } catch (error: any) {
+    return createErrorResponse(`Error creating customer: ${error.message}`);
+  }
+});
+
+// Retrieve Customer
+server.registerTool('retrieve_customer', {
+  description: 'Retrieve a customer by ID from Hydra Payment Gateway',
+  inputSchema: z.object({
+    customerId: z.string().describe('ID of the customer to retrieve'),
+  }),
+}, async (args, extra) => {
+  const { customerId } = args;
+  try {
+    const customer = await hydraClient.retrieveCustomer(customerId);
+    return createToolResponse(customer);
+  } catch (error: any) {
+    return createErrorResponse(`Error retrieving customer: ${error.message}`);
+  }
+});
+
+// ====================
+// Payment Method Tools
+// ====================
+
+// List Payment Methods
+server.registerTool('list_payment_methods', {
+  description: 'List payment methods for a customer in Hydra Payment Gateway',
+  inputSchema: z.object({
+    customerId: z.string().describe('ID of the customer'),
+    type: z.enum(['card']).optional().describe('Type of payment method to filter by'),
+  }),
+}, async (args, extra) => {
+  const { customerId, type } = args;
+  try {
+    const paymentMethods = await hydraClient.listPaymentMethods(customerId, { type });
+    return createToolResponse(paymentMethods);
+  } catch (error: any) {
+    return createErrorResponse(`Error listing payment methods: ${error.message}`);
+  }
+});
+
+// ====================
+// Setup Intent Tools (for saving payment methods)
+// ====================
+
+// Create Setup Intent
+server.registerTool('create_setup_intent', {
+  description: 'Create a setup intent to save a payment method for later use',
+  inputSchema: z.object({
+    customer: z.string().optional().describe('Customer ID to attach the payment method to'),
+    paymentMethodTypes: z.array(z.enum(['card'])).optional().describe('List of payment method types to allow (e.g., ["card"])'),
+    usage: z.enum(['off_session', 'on_session']).optional().describe('Whether the payment method will be used off-session or on-session'),
+    metadata: z.record(z.any()).optional().describe('Additional metadata key-value pairs'),
+  }),
+}, async (args, extra) => {
+  const { customer, paymentMethodTypes, usage, metadata } = args;
+  try {
+    const intent = await hydraClient.createSetupIntent({ customer, paymentMethodTypes, usage, metadata });
+    return createToolResponse(intent);
+  } catch (error: any) {
+    return createErrorResponse(`Error creating setup intent: ${error.message}`);
+  }
+});
+
+// Confirm Setup Intent
+server.registerTool('confirm_setup_intent', {
+  description: 'Confirm a setup intent to save a payment method',
+  inputSchema: z.object({
+    intentId: z.string().describe('ID of the setup intent to confirm'),
+    paymentMethod: z.string().optional().describe('Payment method to use for confirmation'),
+    returnUrl: z.string().url().optional().describe('URL to redirect the user after confirmation'),
+  }),
+}, async (args, extra) => {
+  const { intentId, paymentMethod, returnUrl } = args;
+  try {
+    const intent = await hydraClient.confirmSetupIntent(intentId, { paymentMethod, returnUrl });
+    return createToolResponse(intent);
+  } catch (error: any) {
+    return createErrorResponse(`Error confirming setup intent: ${error.message}`);
+  }
+});
+
+// ====================
+// Health Check Tool
+server.registerTool('health_check', {
+  description: 'Check the health of the Hydra Payment Gateway MCP server',
+  inputSchema: z.object({}),
+}, async (args, extra) => {
+  return createToolResponse({ status: 'ok', timestamp: Date.now(), version: '1.0.0' });
+});
+
+// ====================
+// Start Server
+// ====================
+
+async function main() {
+  const transport = new StdioServerTransport();
+  await server.connect(transport);
+  console.error('Hydra Payment Gateway MCP Server running on stdio');
+}
+
+main().catch((error) => {
+  console.error('Fatal error in main():', error);
+  process.exit(1);
+});

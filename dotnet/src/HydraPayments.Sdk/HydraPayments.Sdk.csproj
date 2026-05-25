@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>HydraPayments.Sdk</RootNamespace>
+    <AssemblyName>HydraPayments.Sdk</AssemblyName>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <PackageId>HydraPayments.Sdk</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Hydra Payments</Authors>
+    <Description>Java SDK for the Hydra Payment Service with HMAC-SHA256 request signing.</Description>
+    <RepositoryUrl>https://github.com/m-lally/hydra</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+</Project>
